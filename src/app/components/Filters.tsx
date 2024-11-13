@@ -16,7 +16,7 @@ function Filters() {
 		<Card className="bg-gray-900 p-4 sticky top-20">
 			<CardHeader className="flex flex-row justify-between items-center">
 				<CardTitle>Filters</CardTitle>
-				<CardDescription className="flex items-center cursor-pointer hover:text-white">
+				<CardDescription className="flex text-neutral-400 items-center cursor-pointer hover:text-white">
 					Clear Filters
 					<CircleX size={16} className="ml-1" />
 				</CardDescription>
@@ -25,7 +25,7 @@ function Filters() {
 				<div className="mb-6">
 					<h3 className="mb-2 text-white">Location</h3>
 					<Select onValueChange={(value) => setSelectedLocation(value)}>
-						<SelectTrigger className="text-muted-foreground">
+						<SelectTrigger className="text-neutral-400">
 							<SelectValue placeholder="Select a location" />
 						</SelectTrigger>
 						<SelectContent>
@@ -43,9 +43,9 @@ function Filters() {
 						<h3 className="mb-2 text-white">{filter.id}</h3>
 						<div className="space-y-2">
 							{filter.values.map((value) => (
-								<label key={value} className="flex items-center space-x-2 text-muted-foreground">
+								<label key={value} className="flex items-center space-x-2 text-neutral-400">
 									<Checkbox value={value} />
-									<span className="text-sm text-muted-foreground">{value}</span>
+									<span className="text-sm text-neutral-400">{value}</span>
 								</label>
 							))}
 						</div>
