@@ -10,7 +10,6 @@ import { indianCities } from '@/constants/indianCities';
 
 function Filters() {
 	const [selectedLocation, setSelectedLocation] = useState('');
-	console.log(selectedLocation);
 
 	return (
 		<Card className="bg-gray-900 p-4 sticky top-20">

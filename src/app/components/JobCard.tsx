@@ -1,19 +1,23 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { getTimeAgo } from '@/lib/getTimeAgo';
-import { Star, MapPin, DollarSign } from 'lucide-react';
+import {
+	Dialog,
+	DialogContent,
+	DialogTrigger,
+	DialogHeader,
+	DialogTitle,
+	DialogDescription,
+} from '@/components/ui/dialog';
+import { MapPin, DollarSign } from 'lucide-react';
+import ApplicationForm from './ApplicationForm';
+import { useState } from 'react';
+import { IJob } from '@/constants/interfaces';
 
-function JobCard({ job }) {
-	const rating = job.rating;
-	const maxRating = 5;
-
-	const stars = Array.from({ length: maxRating }, (_, index) => {
-		if (index < rating) {
-			return <Star key={index} size={16} className="text-yellow-400" />;
-		} else {
-			return <Star key={index} size={16} className="text-gray-400" />;
-		}
-	});
+function JobCard({ job }: { job: IJob }) {
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	return (
 		<Card className="bg-slate-950 hover:bg-blend-lighten mb-4">
@@ -21,10 +25,6 @@ function JobCard({ job }) {
 				<CardTitle>{job.jobTitle}</CardTitle>
 				<CardDescription className="flex items-center space-x-5">
 					<span>{job.companyName}</span>
-					<div className="flex items-center">
-						{stars}
-						<span className="ml-1">{job.rating}</span>
-					</div>
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
@@ -42,7 +42,20 @@ function JobCard({ job }) {
 			</CardContent>
 			<CardFooter className="flex justify-between text-xs text-neutral-400">
 				<span>Posted: {getTimeAgo(job.createdAt)}</span>
-				<Button>Apply Now</Button>
+				<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+					<DialogTrigger asChild>
+						<Button>Apply Now</Button>
+					</DialogTrigger>
+					<DialogContent className="sm:max-w-[800px] bg-neutral-800">
+						<DialogHeader>
+							<DialogTitle>Apply for {job.jobTitle}</DialogTitle>
+							<DialogDescription className="text-gray-400">
+								Submit your application for the {job.jobTitle} role at {job.companyName}.
+							</DialogDescription>
+						</DialogHeader>
+						<ApplicationForm onClose={() => setIsDialogOpen(false)} job={job} />
+					</DialogContent>
+				</Dialog>
 			</CardFooter>
 		</Card>
 	);
